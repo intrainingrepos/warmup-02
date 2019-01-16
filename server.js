@@ -3,19 +3,15 @@
 const express = require('express');
 const app = express();
 
-//ejs template setup
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'ejs');
 
-//static routes
 app.use(express.static(`${__dirname}/public`));
 
-//app middleware
 app.use(express.json());
 
-//routes
 app.get('/', (req,res) => {
-  res.send('<h1>Hello From /</h1>');
+  res.send('<h1>Hello from /</h1>');
 });
 
 app.post('/save', (req,res) => {
@@ -28,8 +24,8 @@ app.get('/err', (req,res,next) => {
 
 app.get('*', (req,res) => {
   res.status(404);
-  res.statusMessage = 'Not Found';
-  res.render('not-found', {request:req});
+  res.statusMessage = 'not found';
+  res.render('not-found', {request:res, error:err});
 });
 
 app.use((err,req,res,next) => {
