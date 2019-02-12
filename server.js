@@ -3,19 +3,15 @@
 const express = require('express');
 const app = express();
 
-//ejs template setup
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'ejs');
 
-//static routes
 app.use(express.static(`${__dirname}/public`));
 
-//app middleware
 app.use(express.json());
 
-//routes
 app.get('/', (req,res) => {
-  res.send('<h1>Hello From /</h1>');
+  res.send('<h1>Hello from /</h1>');
 });
 
 app.post('/save', (req,res) => {
@@ -23,24 +19,24 @@ app.post('/save', (req,res) => {
 });
 
 app.get('/err', (req,res,next) => {
-  next('this is a huge error');
+  next('this is a hughe error');
 });
 
 app.get('*', (req,res) => {
   res.status(404);
-  res.statusMessage = 'Not Found';
-  res.render('not-found', {request:req});
+  res.statusMessage = 'server error';
+  res.render('error', {request:req, error:err});
 });
 
 app.use((err,req,res,next) => {
   res.status(500);
   res.statusMessage = 'server error';
-  res.render('error', {request:req, error:err});
+  res.render('error', {request:rq, error:err});
 });
 
-module.exports = {
+module.exports ={
   server: app,
   start: (port) => {
-    app.listen(port, () => console.log('server up on port', port));
+    app.listen(port, () =>  console.log('server up on port', port));
   },
 };
